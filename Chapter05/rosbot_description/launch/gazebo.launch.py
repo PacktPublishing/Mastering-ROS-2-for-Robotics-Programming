@@ -26,6 +26,9 @@ def generate_launch_description():
     )
     robot_description = {'robot_description': robot_description_config.toxml()}
 
+    # Add RViz config
+    rviz_config_file = os.path.join(pkg_ros_gz_rbot, 'config', 'gazebo.rviz')
+
     # Start Robot state publisher
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -59,8 +62,7 @@ def generate_launch_description():
         output='screen',
     )
 
-
-      # Bridge ROS topics and Gazebo messages for establishing communication
+    # Bridge ROS topics and Gazebo messages for establishing communication
     start_gazebo_ros_bridge_cmd = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -68,9 +70,16 @@ def generate_launch_description():
           'config_file': ros_gz_bridge_config,
         }],
         output='screen'
-      )  
+    )
 
-
+    # Add RViz node
+    rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        arguments=['-d', rviz_config_file],
+        output='screen'
+    )
 
     return LaunchDescription(
         [
@@ -79,5 +88,6 @@ def generate_launch_description():
             spawn,
             start_gazebo_ros_bridge_cmd,
             robot_state_publisher,
+            rviz_node,  # Add RViz node to the launch description
         ]
     )
