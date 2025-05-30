@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  ros2:
+    build:
+      context: .
+      dockerfile: Dockerfile.master_ros2
+      args:
+        docker_user_name: "${USER}"
+        ros_ws: "master_ros2_ws"
+        UID: "${UID:-1000}"
+        GID: "${GID:-1000}"
+    image: ros2_nav:v0.1
+    container_name: ros2_nav
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/.docker.xauth:/tmp/.docker.xauth:rw
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /home/${USER}/master_ros2_ws/src:/home/${USER}/master_ros2_ws/src:rw
+    network_mode: host
+    command: bash
+    stdin_open: true
+    tty: true

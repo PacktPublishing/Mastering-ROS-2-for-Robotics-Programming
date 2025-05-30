@@ -1,0 +1,21 @@
+{
+  "name": "ROS2 Docker",
+  "dockerComposeFile": [
+    "../docker_compose_urdf/docker-compose-nvidia.yml"
+  ],
+  "service": "ros2_docker",
+  "workspaceFolder": "/home/robot/master_ros2_ws",  
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-iot.vscode-ros",
+        "ms-python.mypy-type-checker",
+        "ms-python.pylint",
+        "ms-python.python",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.cpptools"
+      ]
+    }
+  }
+}

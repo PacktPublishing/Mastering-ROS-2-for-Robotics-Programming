@@ -17,7 +17,7 @@ struct Location {
 class NavigationClient : public rclcpp::Node {
 public:
     NavigationClient();
-    bool navigateToPosition(double x, double y, double z, double orientation_w = 1.0);
+    bool navigate2Pose(double x, double y, double z, double orientation_w = 1.0);
     bool deliverMedicine(int order_number);
 
 private:

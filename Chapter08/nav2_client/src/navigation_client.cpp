@@ -18,7 +18,7 @@ NavigationClient::NavigationClient() : Node("navigation_client"),
     RCLCPP_INFO(get_logger(), "Navigation client initialized");
 }
 
-bool NavigationClient::navigateToPosition(double x, double y, double z, double orientation_w)
+bool NavigationClient::navigate2Pose(double x, double y, double z, double orientation_w)
 {
     navigation_complete_ = false;
     navigation_successful_ = false;
@@ -82,7 +82,7 @@ bool NavigationClient::deliverMedicine(int order_number)
     // Navigate to medical shop
     RCLCPP_INFO(get_logger(), "Moving to medical shop to collect medicine...");
     auto shop = locations_["medical_shop"];
-    if (!navigateToPosition(shop.x, shop.y, shop.z)) {
+    if (!navigate2Pose(shop.x, shop.y, shop.z)) {
         RCLCPP_ERROR(get_logger(), "Failed to reach medical shop");
         return false;
     }
@@ -94,7 +94,7 @@ bool NavigationClient::deliverMedicine(int order_number)
     std::string room = (order_number == 1) ? "room1" : "room2";
     RCLCPP_INFO(get_logger(), "Delivering medicine to %s...", room.c_str());
     auto room_loc = locations_[room];
-    if (!navigateToPosition(room_loc.x, room_loc.y, room_loc.z)) {
+    if (!navigate2Pose(room_loc.x, room_loc.y, room_loc.z)) {
         RCLCPP_ERROR(get_logger(), "Failed to reach room");
         return false;
     }
@@ -105,7 +105,7 @@ bool NavigationClient::deliverMedicine(int order_number)
     // Return to initial position
     RCLCPP_INFO(get_logger(), "Returning to initial position...");
     auto initial = locations_["initial_pose"];
-    if (!navigateToPosition(initial.x, initial.y, initial.z)) {
+    if (!navigate2Pose(initial.x, initial.y, initial.z)) {
         RCLCPP_ERROR(get_logger(), "Failed to return to initial position");
         return false;
     }
