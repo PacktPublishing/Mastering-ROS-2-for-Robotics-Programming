@@ -72,8 +72,21 @@ echo ">>> {Installing curl for adding keys}"
 #else
 #    echo "Curl is not installed,Installing Curl"
 
+echo ">>> {Checking and removing existing keys if present}"
+
+if [ -f "/etc/apt/sources.list.d/ros2.list" ]; then
+    sudo rm /etc/apt/sources.list.d/ros2.list
+fi
+
+if [ -f "/usr/share/keyrings/ros-archive-keyring.gpg" ]; then
+    sudo rm /usr/share/keyrings/ros-archive-keyring.gpg
+fi
+
+echo ">>> {Installing ROS 2 APT Source package}"
+
+
 sudo apt update 
-sudo apt install -y curl openssl
+sudo apt install -y curl openssl ros2-apt-source
 
 #fi
 
@@ -82,7 +95,7 @@ echo ""
 #Adding keys
 echo ">>> {Waiting for adding keys, it will take few seconds}"
 echo ""
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+#sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
 
 #Checking return value is OK
 #case $ret in
@@ -93,7 +106,7 @@ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o
 #    exit 0
 #esac
 
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+#echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 
 
 echo ">>> {Done: Added Keys}"
@@ -102,7 +115,7 @@ echo "##########################################################################
 echo ">>> {Step 4: Updating Ubuntu package index, this will take few minutes depend on your network connection}"
 echo ""
 sudo apt update
-sudo apt upgrade 
+sudo apt -y upgrade 
 
 echo ""
 echo "#######################################################################################################################"
