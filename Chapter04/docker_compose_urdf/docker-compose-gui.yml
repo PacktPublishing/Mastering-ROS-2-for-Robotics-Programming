@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  ros2:
+  ros2_docker:
     build:
       context: .
       dockerfile: Dockerfile.master_ros2
