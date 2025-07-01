@@ -117,9 +117,9 @@ Currently, Jonathan works as a senior researcher in the field of Cognitive Robot
   <summary><h2>Other Related Books</h2></summary>
 <ul>
 
-  <li><a href="https://www.packtpub.com/en-us/product/artificial-intelligence-for-robotics-second-edition/9781805129592">Artificial Intelligence for Robotics, Second Edition</a></li>
+  <li><a href="https://www.packtpub.com/en-us/product/artificial-intelligence-for-robotics-9781805124399">Artificial Intelligence for Robotics, Second Edition</a></li>
 
-  <li><a href="https://www.packtpub.com/en-us/product/learn-robotics-programming-second-edition/9781839218804">Learn Robotics Programming, Second Edition</a></li>
+  <li><a href="https://www.packtpub.com/en-us/product/learn-robotics-programming-second-edition-9781839218804">Learn Robotics Programming, Second Edition</a></li>
  
 </ul>
 
