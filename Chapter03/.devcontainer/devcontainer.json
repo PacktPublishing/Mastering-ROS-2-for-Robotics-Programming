@@ -4,7 +4,7 @@
     "../docker_compose_dev/docker-compose-nvidia.yml"
   ],
   "service": "ros2_docker",
-  "workspaceFolder": "/home/robot/master_ros2_ws",  
+  "workspaceFolder": "/home/${localEnv:USER}/master_ros2_ws",  
   "shutdownAction": "stopCompose",
   "customizations": {
     "vscode": {
