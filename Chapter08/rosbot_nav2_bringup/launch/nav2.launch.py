@@ -39,22 +39,6 @@ def generate_launch_description():
         ]
     )
     
-    amcl_node = Node(
-        package='nav2_amcl',
-        executable='amcl',
-        name='amcl',
-        output='screen',
-        parameters=[os.path.join(pkg_rosbot, 'config', 'amcl_params.yaml')],
-    )
-
-    map_server_node = Node(
-        package='nav2_map_server',
-        executable='map_server',
-        name='map_server',
-        output='screen',
-        parameters=[{'yaml_filename': os.path.join(pkg_rosbot, 'maps', 'hospital.yaml')}],
-    )
-
     static_transform_publisher_node = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
@@ -69,8 +53,6 @@ def generate_launch_description():
 
     ld.add_action(nav2_launch_cmd)
     ld.add_action(rviz_launch_cmd)
-    ld.add_action(amcl_node)
-    ld.add_action(map_server_node)
     ld.add_action(static_transform_publisher_node)
 
     return ld
