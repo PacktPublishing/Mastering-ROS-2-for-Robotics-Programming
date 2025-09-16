@@ -8,6 +8,12 @@ CONTAINER_NAME="$3"  # Name of the container you want to create.
 
 HOST_WS_PATH="/home/$USER/$ROS2_WS_NAME/src"  # Path to your workspace on the host.
 
+# Get Docker image user
+DOCKER_USER=$(docker inspect "$DOCKER_IMAGE" --format '{{.Config.User}}')
+if [ -z "$DOCKER_USER" ]; then
+    DOCKER_USER="ubuntu"  # fallback to host user if not set
+fi
+
 xhost +local:docker
 
 XSOCK=/tmp/.X11-unix
@@ -25,10 +31,6 @@ if [ ! -f "$XAUTH" ]; then
     chmod a+r "$XAUTH"
 fi
 
-# Remove existing container
-docker rm -f "$CONTAINER_NAME"
-
-
 # Check for NVIDIA GPU
 if nvidia-smi | grep -q NVIDIA; then
     echo "NVIDIA GPU detected, initializing container with GPU support"
@@ -44,7 +46,7 @@ if nvidia-smi | grep -q NVIDIA; then
         --volume="/etc/localtime:/etc/localtime:ro" \
         --volume="$XSOCK:$XSOCK:rw" \
         --volume="$XAUTH:$XAUTH_DOCKER:rw" \
-        --volume="$HOST_WS_PATH:/home/$USER/$ROS2_WS_NAME/src" \
+        --volume="$HOST_WS_PATH:/home/$DOCKER_USER/$ROS2_WS_NAME/src" \
         "$DOCKER_IMAGE" \
         bash
 else
@@ -58,7 +60,7 @@ else
         --volume="/dev:/dev" \
         --volume="/etc/timezone:/etc/timezone:ro" \
         --volume="/etc/localtime:/etc/localtime:ro" \
-        --volume="$HOST_WS_PATH:/home/$USER/$ROS2_WS_NAME/src" \
+        --volume="$HOST_WS_PATH:/home/$DOCKER_USER/$ROS2_WS_NAME/src" \
         "$DOCKER_IMAGE" \
         bash
 fi
